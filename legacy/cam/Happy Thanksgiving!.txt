@@ -1,0 +1,14 @@
+(venv) foodi@raspberrypi:~/Documents/AMiGA $ /home/foodi/Documents/AMiGA/venv/bin/python /home/foodi/Documents/AMiGA/legacy/cam/grab_frame.py
+After set():
+  Width : 1280.0
+  Height: 720.0
+  FPS   : 30.0
+Traceback (most recent call last):
+  File "/home/foodi/Documents/AMiGA/legacy/cam/grab_frame.py", line 26, in <module>
+    ret, frame = cap.read()
+                 ^^^^^^^^^^
+cv2.error: OpenCV(4.12.0) /io/opencv/modules/imgcodecs/src/loadsave.cpp:1266: error: (-215:Assertion failed) !buf.empty() in function 'imdecode_'
+
+(venv) foodi@raspberrypi:~/Documents/AMiGA $ 
+
+test

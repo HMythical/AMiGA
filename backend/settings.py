@@ -1,0 +1,66 @@
+from typing import Dict
+
+# Pump pin maps (BCM numbering)
+PUMP_PINS: Dict[str, Dict[str, int]] = {
+    "food": {      # pump for food solution
+        "STEP": 27,  
+        "DIR": 22,   
+    },
+    "water": {  # pump for water
+        "STEP": 16,
+        "DIR": 26,
+    },
+}
+
+# Global Enable Pin (Active LOW) shared by all stepper motor drivers
+# E.g. connect both drivers' EN pins to this physical board pin
+GLOBAL_PUMP_EN = 17
+
+# GPIO chip index
+CHIP = 0  # usually /dev/gpiochip0
+LIGHT_PIN = 23
+# Sensor defaults
+DEFAULT_ADDR   = 0x48
+DEFAULT_GAIN   = 2/3        # ±6.144 V (Required to safely read 5V signals)
+DEFAULT_AVG    = 5
+DEFAULT_INTSEC = 1.0
+DEFAULT_SAMPLES= 30
+DEFAULT_DRY_V  = 5.00
+DEFAULT_WET_V  = 0.00
+# Now interpreted as a **voltage** threshold in volts
+DEFAULT_THRESH = 3.00       # V threshold for irrigation logic with 5V sensors
+DEFAULT_DO_PIN = 6          # optional digital wet/dry
+
+# Motor defaults
+DEFAULT_HZ     = 10000
+DEFAULT_DIR    = "forward"
+
+# Full scenario defaults
+DEFAULT_VOTE_K      = 2     # need at least K of 4 over threshold
+DEFAULT_COOLDOWN_S  = 60.0  # wait after an irrigation cycle
+DEFAULT_IRR_SEC     = 5.0   # seconds to run pump when triggered
+
+import os
+# Set to True to explicitely mock Raspberry Pi GPIO hardware (For Mac/Windows UI dev)
+SIMULATE = True if os.environ.get("AMIGA_SIMULATE", "0") == "1" else False
+
+# NPK 7-in-1 Soil Sensor Configuration
+NPK_PORT = os.getenv('NPK_PORT', '/dev/ttyUSB0')
+NPK_SLAVE_ID = int(os.getenv('NPK_SLAVE_ID', '1'))
+NPK_BAUDRATE = int(os.getenv('NPK_BAUDRATE', '9600'))
+NPK_TIMEOUT = float(os.getenv('NPK_TIMEOUT', '1.0'))
+NPK_POLL_INTERVAL = int(os.getenv('NPK_POLL_INTERVAL', '15'))  # seconds
+
+# NPK Sensor Health Thresholds (for UI visual indicators)
+NPK_THRESHOLDS = {
+    'ph_min': 5.5,
+    'ph_max': 8.5,
+    'moisture_min': 20,
+    'moisture_max': 80,
+    'temp_min': 15,
+    'temp_max': 30,
+    'ec_max': 2000,
+    'nitrogen_min': 10,
+    'phosphorus_min': 5,
+    'potassium_min': 100,
+}
